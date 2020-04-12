@@ -6,15 +6,16 @@
       this.name = name;
       this.age = age;
     }
+
     //名前のddタグ生成
-    createName = () => {
+    createName() {
       const textBox = d.getElementById('js_name');
       const createParagraph = d.createElement('dd');
       createParagraph.textContent = this.name;
       textBox.appendChild(createParagraph);
     }
     //年齢のddタグ生成
-    createAge = () => {
+    createAge() {
       const textBox = d.getElementById('js_age');
       const createParagraph = d.createElement('dd');
       createParagraph.textContent = this.age;
