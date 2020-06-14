@@ -1,0 +1,51 @@
+.lp-group {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.lp-tab_list {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+.lp-tab_item {
+  cursor: pointer;
+  width: calc(100% / 3);
+  padding: 10px;
+
+  &:nth-of-type(odd) {
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+  }
+
+  &.is-active {
+    color: #fff;
+    background-color: #000;
+  }
+}
+
+.lp-tab_contents {
+}
+
+.lp-panel {
+  transition: opacity .6s ease;
+
+
+  > p {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  &:not(.is-active) {
+    pointer-events: none;
+    opacity: 0;
+    max-height: 0;
+  }
+  &.is-active {
+    opacity: 1;
+    max-height: auto;
+  }
+}

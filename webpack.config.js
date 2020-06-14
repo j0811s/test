@@ -2,15 +2,12 @@ module.exports = {
   watch: true,
   mode: "production",
   entry: {
-    index: "./src/js/index.js"
+    index: "./src/js/index.js",
+    stansmith: "./src/js/stansmith.js",
   },
   output: {
     filename: "[name].js",
     path: __dirname + '/asset/js'
-  },
-  devServer: {
-    contentBase: "./",
-    open: true
   },
   module: {
     rules: [

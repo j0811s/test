@@ -1,0 +1,535 @@
+/* =====================
+    COMMON
+===================== */
+$breakpoints: (
+  'sp': 'screen and (max-width: 599px)',
+  'tablet': 'screen and (min-width: 600px) and (max-width: 959px)',
+  'notPC': '(max-width: 959px)',
+  'pc': 'screen and (min-width: 960px)',
+) !default;
+
+@mixin mediaQuery($breakpoint: pc) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
+.is_SP {
+  display: none;
+  @include mediaQuery(sp) {
+    display: block;
+  }
+}
+
+.is_Tablet {
+  display: none;
+  @include mediaQuery(tablet) {
+    display: block;
+  }
+}
+
+.is_notPC {
+  display: block;
+  @include mediaQuery() {
+    display: none;
+  }
+}
+
+.is_PC {
+  display: none;
+  @include mediaQuery() {
+    display: block;
+  }
+}
+
+.is_lock {
+  overflow: hidden;
+}
+
+.ctaButton {
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1;
+  color: #fff;
+  background-color: #000;
+  width: auto;
+  min-height: 48px;
+  padding: 12px 30px 8px;
+  position: relative;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transition: background-color .2s ease-in-out;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    border: 1px solid #000;
+    width: 100%;
+    height: 100%;
+    right: -5px;
+    bottom: -5px;
+    transition: .1s cubic-bezier(.3,0,.45,1);
+  }
+
+  &.is_dimension {
+    border: 1px solid #000;
+    transform: translate(0,-3px);
+    transition: .1s cubic-bezier(.3,0,.45,1);
+  }
+
+  &.is_white {
+    color: #000;
+    background-color: #fff;
+    border-color: #fff;
+  }
+
+  &.is_white:before {
+    border-color: #fff;
+  }
+
+  &:hover {
+    color: #98989a;
+  }
+}
+
+$Black: #000;
+$Yellow: #fff000;
+$Orange: #f04600;
+$Red: #e60000;
+/* end
+===================== */
+
+/* =====================
+    stansmith
+===================== */
+.stansmith {
+  position: relative;
+  padding-bottom: 80px;
+  @include mediaQuery() {
+    padding-bottom: 200px;
+  }
+
+  .loader {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    background-color: #fff;
+    transition: opacity 1s;
+  }
+  
+  .loader_icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 10;
+    width: 100px;
+    height: 100px;
+    border: 3px solid #f9f9f9;
+    border-radius: 100%;
+    border-right-color: #ebebeb;
+    animation: spin 1s infinite linear;
+  
+    @keyframes spin {
+      0% {
+        transform: translate(-50%,-50%) rotate(0deg);
+      }
+      100% {
+        transform: translate(-50%,-50%) rotate(360deg);
+      }
+    }
+  }
+
+  /* =====================
+      hero
+  ===================== */
+  .hero {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .mask {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+  }
+
+  .mask_parts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: 100% 0;
+    transition: transform .7s cubic-bezier(.19,1,.22,1);
+    animation: maskActive 1s both linear;
+    @include mediaQuery() {
+      animation: maskActive 1.4s both linear;
+    }
+
+    &.is_active {
+      @keyframes maskActive {
+        0% {
+          transform-origin: 100% 0;
+          transform: scaleX(0);
+        }
+        20% {
+          transform-origin: 100% 0;
+          transform: scaleX(1);
+        }
+        60% {
+          transform-origin: 100% 0;
+          transform: scaleX(1);
+        }
+        80% {
+          transform-origin: 0 0;
+          transform: scaleX(1);
+        }
+        100% {
+          transform-origin: 0 0;
+          transform: scaleX(0);
+        }
+      }
+    }
+  }
+
+  .hero_keyVisual {
+    position: relative;
+  }
+
+  .hero_logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+
+    &.add_black {
+      color: #fff;
+    }
+  }
+
+  /* =====================
+      generator
+  ===================== */
+  .generator {
+    position: relative;
+  }
+
+  .generator_textBox {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+    @include mediaQuery() {
+      left: 7%;
+    }
+    
+    svg {
+      width: 100%;
+      @include mediaQuery() {
+        width: 26vw;
+        max-width: 418px;
+      }
+    }
+
+    .ctaButton_box {
+      margin: 10px 0 0 8px;
+      @include mediaQuery() {
+        margin: 1vw 0 0 .1vw;
+      }
+    }
+  }
+
+  /* =====================
+      feature
+  ===================== */
+  .feature {
+
+    .backgroundList {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100vh;
+    }
+
+    .backgroundList_item {
+      opacity: 1;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transition: opacity .5s;
+      @for $i from 1 through 4 {
+        &:nth-child(#{$i}) {
+          z-index:#{5 - $i};
+        }
+      }
+
+      &.add_hide {
+        opacity: 0;
+      }
+    }
+
+    .backgroundList_image {
+      position: relative;
+      width: 100%;
+      height: 100%;
+
+      &.add_image:before {
+        opacity: 1;
+      }
+
+      &:before {
+        opacity: 0;
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        transition: opacity .5s;
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 0;
+      }
+
+      &.add_black:before {
+        background-image: url('/stansmith/images/mobile/lp-feature_parallaxBlack_1906.png');
+        @include mediaQuery() {
+          background-image: url('/stansmith/images/lp-feature_parallaxBlack_1906.png');
+        }
+      }
+
+      &.add_yellow:before {
+        background-image: url('/stansmith/images/mobile/lp-feature_parallaxYellow_1906.png');
+        @include mediaQuery() {
+          background-image: url('/stansmith/images/lp-feature_parallaxYellow_1906.png');
+        }
+      }
+
+      &.add_orange:before {
+        background-image: url('/stansmith/images/mobile/lp-feature_parallaxOrange_1906.png');
+        @include mediaQuery() {
+          background-image: url('/stansmith/images/lp-feature_parallaxOrange_1906.png');
+        }
+      }
+
+      &.add_red:before {
+        background-image: url('/stansmith/images/mobile/lp-feature_parallaxRed_1906.png');
+        @include mediaQuery() {
+          background-image: url('/stansmith/images/lp-feature_parallaxRed_1906.png');
+        }
+      }
+        
+      &.add_black:after {
+        background-color: $Black;
+      }
+      
+      &.add_yellow:after {
+        background-color: $Yellow;
+      }
+      
+      &.add_orange:after {
+        background-color: $Orange;
+      }
+      
+      &.add_red:after {
+        background-color: $Red;
+      }
+    }
+
+  }
+
+  .feature_item {
+    padding-top: 550px;
+    @include mediaQuery() {
+      padding-top: 0;
+    }
+
+    .lookList {
+      @include mediaQuery() {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        padding-top: 900px;
+        margin: 0 4%;
+      }
+    }
+
+    .lookList_item {
+      position: relative;
+      @include mediaQuery(notPC) {
+        &:first-of-type,
+        &:nth-of-type(2) {
+          margin: 0 15px 20px;
+        }
+        &:nth-of-type(3) {
+          margin: 40px 0 0 15px;
+        }
+        &:nth-of-type(4) {
+          width: 60%;
+          margin: 40px 0 0 0;
+        }
+        &:nth-of-type(5) {
+          width: 50%;
+          margin: -120px 0 0 auto;
+        }
+        &:last-of-type {
+          width: 75%;
+          margin: 40px 0 0 0;
+        }
+      }
+      @include mediaQuery() {
+        width: 48%;
+        &:not(:first-of-type) {
+          margin-top: 30px;
+        }
+        &:nth-of-type(2) {
+          margin-top: 400px;
+        }
+        &:nth-of-type(6) {
+          margin-top: 120px;
+        }
+      }
+
+      .ctaButton_box {
+        margin-top: 80px;
+        @include mediaQuery(notPC) {
+          display: none;
+        }
+      }
+    }
+
+    .add_black .lookList_item,
+    .add_red .lookList_item {
+      @include mediaQuery() {
+        &:nth-of-type(3) {
+          width: 25%;
+          margin: 30px auto 0;
+        }
+        &:nth-of-type(4) {
+          margin-top: 130px;
+        }
+        &:nth-of-type(5) {
+          margin-top: 210px;
+        }
+        &:last-of-type {
+          padding: 3.6%;
+          .ctaButton_box {
+            display: none;
+          }
+        }
+      }
+
+      .ctaButton_box {
+        text-align: right;
+      }
+    }
+
+    .add_yellow .lookList_item,
+    .add_orange .lookList_item  {
+      @include mediaQuery(notPC) {
+        &:nth-of-type(4) {
+          width: 60%;
+          margin: 40px 0 0 auto;
+        }
+        &:nth-of-type(5) {
+          width: 50%;
+          margin: -120px auto 0 0;
+        }
+      }
+      @include mediaQuery() {
+        &:nth-of-type(3) {
+          width: 50%;
+          margin: 30px 0 0;
+        }
+        &:nth-of-type(4) {
+          width: 25%;
+          margin: 130px auto 0;
+        }
+        &:nth-of-type(5) {
+          transform: translateY(-75px);
+          padding: 0 6.2%;
+          .ctaButton_box {
+            display: none;
+          }
+        }
+        &:last-of-type {
+          padding: 0 7.2% 0 0;
+        }
+      }
+    }
+  }
+
+  /* =====================
+      footerSticky
+  ===================== */
+  .footerSticky {
+    opacity: 0;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    border-top: 1px solid #666;
+    transition: opacity .5s;
+    @include mediaQuery(pc) {
+      display: none;
+    }
+
+    &.is_active {
+      opacity: 1;
+    }
+  }
+
+  .footerSticky_link {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    font-size: 15px;
+    width: 100%;
+    padding: 14px 20px;
+    background-color: #000;
+    &:after {
+      content: "→";
+      transition: none;
+      font-weight: lighter;
+      font-size: 1.4em;
+      position: absolute;
+      top: 50%;
+      right: 17px;
+      transform: translateY(-50%);
+    }
+  }
+}
+/* end
+===================== */

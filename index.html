@@ -5,74 +5,75 @@
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
   <title>Document</title>
   <link rel="stylesheet" href="./asset/css/index.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/picturefill/3.0.3/picturefill.js"></script>
   <script src="./asset/js/index.js" defer></script>
 </head>
 <body>
   <main>
-    <h1>テスト</h1>
-    <dl class="bl_name">
-      <div id="js_name">
-        <dt>名前：</dt>
+    <div class="lp-group">
+      <ul class="lp-tab_list js-tab_list">
+        <li class="lp-tab_item js-tab_item is-active">カウントダウン</li>
+        <li class="lp-tab_item js-tab_item">アコーディオン・ポップアップ</li>
+        <li class="lp-tab_item js-tab_item">タブ3</li>
+      </ul>
+      <div class="lp-tab_contents js-panel_list">
+        <div class="lp-panel js-panel is-active">
+          <span id="count"></span>
+          <span id="count2"></span>
+        </div>
+        <div class="lp-panel js-panel">
+          <dl class="bl_accordion js_accordion">
+            <dt class="bl_accordion_title js_accordionButton">メニュー1</dt>
+            <dd class="bl_accordion_text js_accordionTarget"><span>テストテキストテストテキストテストテキストテストテキストテストテキスト</span></dd>
+            <dt class="bl_accordion_title js_accordionButton">メニュー2</dt>
+            <dd class="bl_accordion_text js_accordionTarget">テストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキスト終わり</dd>
+            <dt class="bl_accordion_title js_accordionButton">メニュー3</dt>
+            <dd class="bl_accordion_text js_accordionTarget">テストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキスト終わり</dd>
+          </dl>
+    
+          <button class="el_button js_accordion3">メニュー</button>
+          <ul class="bl_accordion js_accordionTarget3">
+            <li class="bl_accordion_text">テスト</li>
+            <li class="bl_accordion_text">テスト</li>
+            <li class="bl_accordion_text">テスト</li>
+            <li class="bl_accordion_text">テスト</li>
+          </ul>
+    
+          <ul id="js_popUp" class="bl_popUpList js_popUp">
+            <li data-modal="https://placehold.jp/500x500.png">
+              <img src="https://placehold.jp/500x500.png" alt="">
+            </li>
+            <li data-modal="https://placehold.jp/800x500.png">
+              <img src="https://placehold.jp/500x500.png" alt="">
+            </li>
+          </ul>
+    
+          <ul id="js_popUp" class="bl_popUpList js_popUpVideo">
+            <li data-modal="https://cmspreview-res.cloudinary.com/video/upload/q_auto,vc_auto/training-ss20-rdy_c1-hp-lv2-nonaka-2-teaser_large-2x1-t_m_d51cre.mp4">
+              <img src="https://placehold.jp/500x500.png" alt="">
+            </li>
+            <li data-modal="https://cloudinary-res.cloudinary.com/video/upload/v1572305834/Marketing/video_story.mp4">
+              <img src="https://placehold.jp/700x500.png" alt="">
+            </li>
+          </ul>
+    
+          <ul id="js_popUp" class="bl_popUpList js_popUpIframe">
+            <li data-modal="https://www.youtube.com/embed/JJjgahtz6N4?muted=1&autoplay=1&loop=1&playlist=JJjgahtz6N4">
+              <img src="https://placehold.jp/500x500.png" alt="">
+            </li>
+            <li data-modal="https://www.youtube.com/embed/JJjgahtz6N4?muted=1&autoplay=1&loop=1&playlist=JJjgahtz6N4">
+              <img src="https://placehold.jp/500x500.png" alt="">
+            </li>
+          </ul>
+        </div>
+        <div class="lp-panel js-panel">
+          <a href="/stansmith/">stansmith</a>
+          <p>サンプルテキストサンプルテキストサンプルテキストサンプルテキスト</p>
+          <p>サンプルテキストサンプルテキストサンプルテキストサンプルテキスト</p>
+          <p>サンプルテキストサンプルテキストサンプルテキストサンプルテキスト</p>
+        </div>
       </div>
-      <div id="js_age">
-        <dt>年齢：</dt>
-      </div>
-    </dl>
-
-    <dl class="bl_accordion js_accordion">
-      <dt class="bl_accordion_title js_accordionButton">メニュー1</dt>
-      <dd class="bl_accordion_text js_accordionTarget"><span>テストテキストテストテキストテストテキストテストテキストテストテキスト</span></dd>
-      <dt class="bl_accordion_title js_accordionButton">メニュー2</dt>
-      <dd class="bl_accordion_text js_accordionTarget">テストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキスト</dd>
-      <dt class="bl_accordion_title js_accordionButton">メニュー3</dt>
-      <dd class="bl_accordion_text js_accordionTarget">テストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキスト</dd>
-    </dl>
-
-    <dl class="bl_accordion js_accordion2">
-      <dt class="bl_accordion_title js_accordionButton">メニュー4</dt>
-      <dd class="bl_accordion_text js_accordionTarget"><span>テストテキストテストテキストテストテキストテストテキストテストテキスト</span></dd>
-      <dt class="bl_accordion_title js_accordionButton">メニュー5</dt>
-      <dd class="bl_accordion_text js_accordionTarget">テストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキスト</dd>
-      <dt class="bl_accordion_title js_accordionButton">メニュー6</dt>
-      <dd class="bl_accordion_text js_accordionTarget">テストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキスト</dd>
-    </dl>
-
-    <button class="el_button js_accordion3">メニュー7</button>
-    <ul class="bl_accordion js_accordionTarget3">
-      <li class="bl_accordion_text">テスト</li>
-      <li class="bl_accordion_text">テスト</li>
-      <li class="bl_accordion_text">テスト</li>
-      <li class="bl_accordion_text">テスト</li>
-    </ul>
-
-    <button class="el_button js_accordion3">メニュー8</button>
-    <ul class="bl_accordion js_accordionTarget3">
-      <li class="bl_accordion_text">テスト</li>
-      <li class="bl_accordion_text">テスト</li>
-      <li class="bl_accordion_text">テスト</li>
-      <li class="bl_accordion_text">テスト</li>
-    </ul>
-
-    <ul id="js_popUp" class="bl_popUpList js_popUp">
-      <li data-modal="https://placehold.jp/500x500.png">
-        <img src="https://placehold.jp/500x500.png" alt="">
-      </li>
-      <li data-modal="https://placehold.jp/500x500.png">
-        <img src="https://placehold.jp/500x500.png" alt="">
-      </li>
-    </ul>
-
-    <ul id="js_popUp" class="bl_popUpList js_popUpVideo">
-      <li data-modal="https://cmspreview-res.cloudinary.com/video/upload/q_auto,vc_auto/training-ss20-rdy_c1-hp-lv2-nonaka-2-teaser_large-2x1-t_m_d51cre.mp4">
-        <img src="https://placehold.jp/500x500.png" alt="">
-      </li>
-    </ul>
-
-    <ul id="js_popUp" class="bl_popUpList js_popUpIframe">
-      <li data-modal="https://www.youtube.com/embed/JJjgahtz6N4?muted=1&autoplay=1&loop=1&playlist=JJjgahtz6N4">
-        <img src="https://placehold.jp/500x500.png" alt="">
-      </li>
-    </ul>
+    </div>
   </main>
 </body>
 </html>

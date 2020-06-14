@@ -1,37 +1,52 @@
+
+require('intersection-observer'); //https://github.com/w3c/IntersectionObserver/tree/master/polyfill
+import objectFitImages from 'object-fit-images';
+objectFitImages(); //https://github.com/fregante/object-fit-images
+
 ((d, w) => {
 
-  // class構文テスト
-  class User {
-    constructor( name, age ) {
-      this.name = name;
-      this.age = age;
-    }
-
-    //名前のddタグ生成
-    createName() {
-      const textBox = d.getElementById('js_name');
-      const createParagraph = d.createElement('dd');
-      createParagraph.textContent = this.name;
-      textBox.appendChild(createParagraph);
-    }
-    //年齢のddタグ生成
-    createAge() {
-      const textBox = d.getElementById('js_age');
-      const createParagraph = d.createElement('dd');
-      createParagraph.textContent = this.age;
-      textBox.appendChild(createParagraph);
-    }
+  
+  /**
+   * @param  {String} element セレクター
+   * @param  {Object} callback forEachによるコールバック
+   */
+  const sliceCall = (element, callback) => {
+    return [].slice.call(element).forEach(callback);
   }
+
+  
+  (() => {
+    const tab = d.querySelectorAll('.js-tab_item');
+    const contents = d.querySelectorAll('.js-panel');
+
+    sliceCall(tab, (tabItem, index) => {
+      tabItem.addEventListener('click', (e) => {
+        // タブ
+        for (let i = 0; i < tab.length; i++) {
+          tab[i].classList.remove('is-active');
+        }
+        tabItem.classList.add('is-active');
+        
+        // コンテンツ
+        for (let i = 0; i < contents.length; i++) {
+          contents[i].classList.remove('is-active');
+        }
+        contents[index].classList.add('is-active');
+      });
+    });
+  })();
+
+
 
   /**
   * アコーディオン
   */
   class accordion {
-  /**
-   * @param {string} button ボタン要素のセレクター
-   * @param {string} target 開閉要素のセレクター
-   * @param {Object} config transition-duration, transition-timing-functionの任意指定
-   */
+    /**
+    * @param {string} button ボタン要素のセレクター
+    * @param {string} target 開閉要素のセレクター
+    * @param {Object} config transition-duration, transition-timing-functionの任意指定
+    */
     constructor(button, target, config) {
       // ボタン要素
       this.button = [].slice.call(d.querySelectorAll(button));
@@ -47,10 +62,10 @@
       if (this.config.transitionDuration === undefined) this.config.transitionDuration = duration;
       if (this.config.transitionTimingFunction === undefined) this.config.transitionTimingFunction = timing;
       // 処理実行
-      this.init(this.button, this.target, this.config);
+      this.process(this.button, this.target, this.config);
     }
 
-    init(button, target, config) {
+    process(button, target, config) {
       // 開閉要素のスタイル指定
       let targetHeightArray = [];
       target.forEach((target) => {
@@ -61,151 +76,221 @@
         target.style.transitionDuration = config.transitionDuration;
         target.style.transitionTimingFunction = config.transitionTimingFunction;
       });
-      window.addEventListener('resize', () => {
-        targetHeightArray = [];
-        target.forEach((target) => {
-          targetHeightArray.push(target.scrollHeight);
-        });
-      });
 
       // 開閉ボタンイベント
       button.forEach((btn,index) => {
         btn.addEventListener('click', () => {
           btn.classList.toggle('is_open');
+
           if (btn.classList.contains('is_open')) {
+            // setOverflow();
             target[index].style.maxHeight = targetHeightArray[index] + 'px';
           } else {
             target[index].style.maxHeight = 0;
           }
         });
       });
+
+
+      //リサイズ
+      window.addEventListener('resize', () => {
+        targetHeightArray = [];
+        target.forEach((target) => {
+          targetHeightArray.push(target.scrollHeight);
+        });
+
+        for (let i = 0; i < button.length; i++) {
+          button[i].classList.remove('is_open');
+          target[i].style.maxHeight = 0;
+        }
+      });
     }
   }
 
 
-// from:https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
-(function (arr) {
-  arr.forEach(function (item) {
-    if (item.hasOwnProperty('remove')) {
-      return;
-    }
-    Object.defineProperty(item, 'remove', {
-      configurable: true,
-      enumerable: true,
-      writable: true,
-      value: function remove() {
-        if (this.parentNode !== null)
-          this.parentNode.removeChild(this);
+  // from:https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
+  (function (arr) {
+    arr.forEach(function (item) {
+      if (item.hasOwnProperty('remove')) {
+        return;
       }
-    });
-  });
-})([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
-
-
-  /**
-  * ポップアップ
-  */
-  class modal {
-    /**
-     * @param {string} wrapper モーダル要素を囲むセレクター
-     * @param {Object} config モーダル要素の種類 type:image, video, iframe
-     */
-    constructor(wrapper,config) {
-      this.wrapper = [].slice.call(document.querySelectorAll(wrapper));
-      const dataElement = '[data-modal]';
-      this.target = [].slice.call(document.querySelectorAll(wrapper + ' ' + dataElement));
-      this.item = [];
-      this.target.forEach((item) => {
-        this.item.push(item.dataset.modal);
+      Object.defineProperty(item, 'remove', {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: function remove() {
+          if (this.parentNode !== null)
+            this.parentNode.removeChild(this);
+        }
       });
-      this.config = config ? config : {
-        type: 'image'
-      };
-      this.toggleModal(this.wrapper, this.target, this.item, this.config);
+    });
+  })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+
+
+/**
+* ポップアップ
+*/
+class modal {
+  /**
+    * @param {string} wrapper モーダル要素を囲むセレクター
+    * @param {Object} config モーダル要素の種類 type:image, video, iframe
+    */
+  constructor(wrapper,config) {
+    this.target = [].slice.call(document.querySelectorAll(wrapper + ' ' + '[data-modal]'));
+    this.config = config ? config : {
+      type: 'image',
+      alt: ['']
+    };
+    this.toggleModal(this.target, this.config);
+  }
+
+  toggleModal(target, config) {
+    // モーダル準備
+    const createModal = document.createElement('div');
+    createModal.setAttribute('id', 'js_modal');
+    createModal.setAttribute('class', 'modal');
+    // モーダルコンテンツ準備
+    const createModalContents = document.createElement('div');
+    createModalContents.setAttribute('id', 'js_modal_contents');
+    createModalContents.setAttribute('class', 'modal_contents');
+    // typeに合わせた要素
+    let createItem;
+    if (config.type === 'image') {
+      createItem = document.createElement('img');
+    } else if (config.type === 'video') {
+      createItem = document.createElement('video');
+      createItem.setAttribute('muted', '');
+      createItem.setAttribute('autoplay', '');
+      createItem.setAttribute('loop', '');
+      createItem.setAttribute('controls', '');
+      createModalContents.classList.add('hp_video');
+    } else if (config.type === 'iframe') {
+      createItem = document.createElement('iframe');
+      createModalContents.classList.add('hp_video');
     }
+    // 閉じるボタン準備
+    const createClose = document.createElement('a');
+    createClose.setAttribute('id', 'js_modal_close');
+    createClose.setAttribute('class', 'modal_close');
 
-    toggleModal(wrapper, target, item, config) {
-      // モーダル準備
-      const createModal = document.createElement('div');
-      createModal.setAttribute('id', 'js_modal');
-      createModal.setAttribute('class', 'modal');
-      // モーダルコンテンツ準備
-      const createModalContents = document.createElement('div');
-      createModalContents.setAttribute('id', 'js_modal_contents');
-      createModalContents.setAttribute('class', 'modal_contents');
-      // typeに合わせた要素
-      let createItem;
-      if (config.type === 'image') {
-        createItem = document.createElement('img');
-      } else if (config.type === 'video') {
-        createItem = document.createElement('video');
-        createItem.setAttribute('muted', '');
-        createItem.setAttribute('autoplay', '');
-        createItem.setAttribute('loop', '');
-        createItem.setAttribute('controls', '');
-        createModalContents.classList.add('hp_video');
-      } else if (config.type === 'iframe') {
-        createItem = document.createElement('iframe');
-        createModalContents.classList.add('hp_video');
-      }
-      // 閉じるボタン準備
-      const createClose = document.createElement('a');
-      createClose.setAttribute('id', 'js_modal_close');
-      createClose.setAttribute('class', 'modal_close');
+    target.forEach((target,index) => {
+      target.addEventListener('click', () => {
+        // モーダル要素生成
+        document.body.appendChild(createModal);
+        createModal.appendChild(createClose);
+        const modal = document.getElementById('js_modal');
+        const modalClose = document.getElementById('js_modal_close');
+        modal.appendChild(createModalContents);
+        // モーダルコンテンツ生成
+        createItem.setAttribute('id', 'js_modal_item');
+        createItem.setAttribute('class', 'modal_item');
+        createItem.setAttribute('src', target.dataset.modal); // src設定
+        if (config.type === 'image' && config.alt[index] === undefined) config.alt[index] = ''; // altがundefinedなら空文字
+        if (config.type === 'image') createItem.setAttribute('alt', config.alt[index]); // type:imageならalt設定
+        createModalContents.appendChild(createItem);
 
-      target.forEach((target) => {
-        target.addEventListener('click', () => {
-          // モーダル要素生成
-          document.body.appendChild(createModal);
-          createModal.appendChild(createClose);
-          const modal = document.getElementById('js_modal');
-          const modalClose = document.getElementById('js_modal_close');
-          modal.appendChild(createModalContents);
-          createItem.setAttribute('id', 'js_modal_item');
-          createItem.setAttribute('class', 'modal_item');
-          createItem.setAttribute('src', target.dataset.modal);
-          createModalContents.appendChild(createItem);
-
-          // モーダルを閉じる処理
-          const closeButton = modal || modalClose;
-          const userAgent = window.navigator.userAgent.toLowerCase();
-          closeButton.addEventListener('click', () => {
-            if (userAgent.indexOf('trident/7') !== -1) {
-              document.body.removeChild(modal);
-            } else {
-              modal.remove();
-            }
-          });
-          // モーダルコンテンツ内のクリックイベント無効化
-          const modalContents = document.getElementById('js_modal_contents');
-          modalContents.addEventListener('click', (e) => {
-            e.stopPropagation();
-          });
+        // モーダルを閉じる処理
+        const closeButton = modal || modalClose;
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        closeButton.addEventListener('click', () => {
+          if (userAgent.indexOf('trident/7') !== -1) {
+            document.body.removeChild(modal);
+          } else {
+            modal.remove();
+          }
+        });
+        // モーダルコンテンツ内のクリックイベント無効化
+        const modalContents = document.getElementById('js_modal_contents');
+        modalContents.addEventListener('click', (e) => {
+          e.stopPropagation();
         });
       });
-    }
+    });
   }
+}
+
+class countDown {
+  /**
+  * カウントダウン
+  * @param {string} target カウントダウンを表示するセレクター (例. '.js-countDown')
+  * @param {string} start 開始日時 (例. '2020/4/21 00:00:00')
+  * @param {string} end 終了日時 (例. '2020/4/24 12:00:00')
+  * @param {string} finishTarget カウントダウン終了時のadd-hide付け替えセレクター (例. '.js-countDown_finish')
+  */
+  constructor(target, start, end, finishTarget = null) {
+    this.target = document.querySelector(target);
+    this.start = start;
+    this.end = end;
+    this.finishElement = [];
+    this.finishElement.slice.call(document.querySelectorAll(finishTarget)).forEach((ele) => {
+      this.finishElement.push(ele);
+    });
+    this.setCountDown();
+  }
+
+  setCountDown() { //カウントダウン処理
+    let timerId;
+    timerId = setInterval(() => {
+      const addZero = (num) => { //1桁にならないように0を追加
+        return ('0' + num).slice(-2);
+      }
+      const addZeroDay = (num) => { return ('0' + num).slice(-3); };
+      const targetElement = this.target; //表示対象
+      const nowDate = new Date(); //現在時刻
+      let startDate = new Date(this.start); //開始時間
+      let endDate = new Date(this.end); //終了時間
+      let period = endDate - nowDate; //残り時間
+      let day = 0; //日
+      let h = 0; //時
+      let m = 0; //分
+      let s = 0; //秒
+      if (nowDate > startDate) { //開始時間を過ぎていれば時刻設定
+        if (period >= 0) {
+          day = Math.floor(period / (1000 * 60 * 60 * 24));
+          period -= (day　*(1000 * 60 * 60 * 24));
+          h = Math.floor(period / (1000 * 60 * 60));
+          period -= (h * (1000 * 60 * 60));
+          m = Math.floor(period / (1000 * 60));
+          period -= (m * (1000 * 60));
+          s = Math.floor(period / 1000);
+          targetElement.innerHTML = day + '日 ' + addZero(h) + ':' + addZero(m) + ':' + addZero(s);
+        }
+      } else {
+        targetElement.style.display = 'none';
+        clearInterval(timerId);
+      }
+
+      if (nowDate > endDate) { //残り時間が終了時間を過ぎた時
+        targetElement.parentNode.removeChild(targetElement);
+        this.finishElement.forEach((ele) => {
+          ele.classList.toggle('add-hide')
+        });
+        clearInterval(timerId);
+      }
+    }, 1000);
+  }
+}
+  
 
   // 実行
   w.addEventListener('load', () => {
-    const taro = new User('田中太郎', 20);
-    taro.createName();
-    taro.createAge();
 
-    const firstList = new accordion('.js_accordion > .js_accordionButton', '.js_accordion > .js_accordionTarget', {
+    new accordion('.js_accordion > .js_accordionButton', '.js_accordion > .js_accordionTarget', {
       transitionDuration: '1s',
     });
-    const secondList = new accordion('.js_accordion2 > .js_accordionButton', '.js_accordion2 > .js_accordionTarget');
-    const thirdList = new accordion('.js_accordion3', '.js_accordionTarget3', {
+    new accordion('.js_accordion3', '.js_accordionTarget3', {
       transitionTimingFunction: 'cubic-bezier(0.175, 0.885, 0.320, 1.275)'
     });
 
-    const popUpItem = new modal('.js_popUp');
-    const popUpvideo = new modal('.js_popUpVideo', {
+    new modal('.js_popUp');
+    new modal('.js_popUpVideo', {
       type: 'video'
     });
-    const popUpiframe = new modal('.js_popUpIframe', {
+    new modal('.js_popUpIframe', {
       type: 'iframe'
     });
+
+    new countDown('#count', '2020/6/12 10:00:00', '2021/4/22 10:00:00');
+    new countDown('#count2', '2020/6/12 10:00:00', '2021/4/26 10:00:00');
   });
 })(document, window);

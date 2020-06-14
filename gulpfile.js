@@ -3,8 +3,11 @@ const gulp = require("gulp");
 
 const sass = require("gulp-sass");
 const sassGlob = require('gulp-sass-glob');
+const autoprefixer = require('gulp-autoprefixer');
 const cleanCSS = require('gulp-clean-css');
 const browserSync = require("browser-sync");
+const postcss = require("gulp-postcss");
+const cssImport = require("postcss-import");
 
 // webpackの設定ファイルの読み込み
 const webpackStream = require("webpack-stream");
@@ -13,9 +16,16 @@ const webpackConfig = require("./webpack.config");
 
 // Sass
 gulp.task("sass", function () {
+  const plugins = [
+    cssImport({
+      path: [ 'node_modules' ]
+    })
+  ];
   return gulp.src('./src/css/*.scss')
     .pipe(sassGlob())
     .pipe(sass())
+    .pipe(postcss(plugins))
+    .pipe(autoprefixer())
     .pipe(gulp.dest('./asset/css'));
 });
 
