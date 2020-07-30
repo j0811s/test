@@ -137,3 +137,45 @@ video {
 [data-href] {
   cursor: pointer;
 }
+
+
+
+main {
+  margin: 300px auto ;
+  background-color: red;
+}
+
+// スクロールテスト用
+.boxWrapper {
+  margin-top: 120px;
+
+  .boxNav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: rgba(0,0,0,.6);
+
+    > li {
+      width: 30%;
+      text-align: center;
+      >a {
+        color: #fff;
+      }
+    }
+  }
+  .box {
+    height: 600px;
+    margin: 500px auto 0;
+    background-color: #eee;
+    &:first-of-type {
+      margin-top: 0;
+    }
+    &:nth-of-type(even) {
+      background-color: #000;
+    }
+  }
+}

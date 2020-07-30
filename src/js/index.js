@@ -271,8 +271,86 @@ class countDown {
   }
 }
   
+  /**
+   * スムーススクロール
+   * @param  {Number} duration  スクロールにかかる時間
+   * @param  {Number} gap  スクロール停止位置の間隔 (固定ナビゲーションの高さなどに)
+   * @param  {String} easingType  イージングの種類
+   */
+  const smoothScroll = (duration = 600, gap = 0, easingType = 'easeInOutCubic') => {
+    const easing = {
+      /**
+       * @param  {Number} t  current time
+       * @param  {Number} b  beginning value
+       * @param  {Number} c  change in value
+       * @param  {Number} d  duration
+       */
+      linear: (t, b, c, d) => {
+        return c * t / d + b;
+      },
+      easeInQuad: (t, b, c, d) => {
+        return c * (t /= d) * t + b;
+      },
+      easeOutQuad: (t, b, c, d) =>  {
+        return -c * (t /= d) * (t - 2) + b;
+      },
+      easeInOutQuad: (t, b, c, d) =>  {
+        if ((t /= d / 2) < 1) return c / 2 * t * t + b;
+        return -c / 2 * ((--t) * (t - 2) - 1) + b;
+      },
+      easeInCubic: (t, b, c, d) =>  {
+        return c * (t /= d) * t * t + b;
+      },
+      easeOutCubic: (t, b, c, d) =>  {
+        return c * ((t = t / d - 1) * t * t + 1) + b;
+      },
+      easeInOutCubic: (t, b, c, d) =>  {
+        if ((t /= d / 2) < 1) return c / 2 * t * t * t + b;
+        return c / 2 * ((t -= 2) * t * t + 2) + b;
+      }
+    }
+
+    const ignore = '.js-noSmooth'; //スムーススクロールを対象外にしたい要素につけるクラス
+    const targetButton = d.querySelectorAll(`a[href^="#"]:not(${ignore})`);
+
+    [].slice.call(targetButton).forEach((targetButton) => {
+      targetButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = targetButton.getAttribute('href');
+        const target = d.querySelector(href == '#' ? 'html' : href);
+        const scrollTop = w.pageYOffset || d.documentElement.scrollTop;
+        const targetPosition = target.getBoundingClientRect().top - gap;
+        const startTime = Date.now();
+
+        (function scroll() {
+          const currentTime = Date.now() - startTime;
+          if (currentTime < duration) {
+            scrollTo(0, easing[easingType](currentTime, scrollTop, targetPosition, duration));
+            requestAnimationFrame(scroll);
+          } else {
+            scrollTo(0, targetPosition + scrollTop);
+          }
+        })();
+      });
+    });
+  };
+
+  
 
   // 実行
+  w.addEventListener('DOMContentLoaded', () => {
+    
+    if (document.uniqueID && document.documentMode == 11) {
+      console.log("IE11 ○");
+    } else {
+      console.log("IE11 ×");
+    }
+
+    smoothScroll(600, d.querySelector('.js-localNav').clientHeight);
+
+  });
+
+
   w.addEventListener('load', () => {
 
     new accordion('.js_accordion > .js_accordionButton', '.js_accordion > .js_accordionTarget', {
@@ -290,7 +368,7 @@ class countDown {
       type: 'iframe'
     });
 
-    new countDown('#count', '2020/6/12 10:00:00', '2021/4/22 10:00:00');
-    new countDown('#count2', '2020/6/12 10:00:00', '2021/4/26 10:00:00');
+    // new countDown('#count', '2020/6/12 10:00:00', '2021/4/22 10:00:00');
+    // new countDown('#count2', '2020/6/12 10:00:00', '2021/4/26 10:00:00');
   });
 })(document, window);
