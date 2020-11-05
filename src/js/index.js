@@ -334,8 +334,93 @@ class countDown {
       });
     });
   };
-
   
+
+  /**
+   * オーディオコントロール
+   * @param  {Object} audioElement mp3のファイル指定
+   * @param  {Object} buttonElement mp3を操作するボタン要素
+   * @param  {Object} imageElement.toggleTarget 切り替えimgのセレクタ指定
+   * @param  {Object} imageElement.toggleTargetAll 全体の切り替えimgの共通クラスセレクタ指定
+   */
+  class AudioControls {
+    constructor(
+      config = {
+        audioElement: null,
+        audioButton: null,
+        imageElement: {
+          toggleTarget: null,
+          toggleTargetAll: null
+        }
+      }
+    ) {
+      this.audioElement = new Audio(config.audioElement);
+      this.audioButton = config.audioButton;
+      this.imageElement = config.imageElement.toggleTarget;
+      this.imageElementAll = config.imageElement.toggleTargetAll;
+      this.init();
+    }
+
+    init() {
+      this.audioElement.muted = true;
+      document.querySelectorAll(this.audioButton)[0].parentNode.insertBefore(this.audioElement, document.querySelectorAll(this.audioButton)[0].nextSibling);
+      this.handleClick();
+    }
+
+    //オーディオボタンのクリックイベント
+    handleClick() {
+      [].slice.call(document.querySelectorAll(this.audioButton)).forEach(audioButton => {
+        audioButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (this.audioElement.paused) {
+            this.handleStopAudioAll();
+            this.handlePlayAudio();
+          } else {
+            this.handleStopAudio();
+          }
+        });
+      })
+    }
+
+    //再生処理
+    handlePlayAudio() {
+      this.audioElement.muted = false;
+      this.audioElement.play();
+      this.handleToggleClass(this.imageElement, 'add');
+      this.handleEndAudio();
+    }
+
+    //停止処理
+    handleStopAudio() {
+      this.audioElement.pause();
+      this.audioElement.currentTime = 0;
+      this.handleToggleClass(this.imageElement, 'remove');
+    }
+
+    //すべてのaudioタグの再生停止
+    handleStopAudioAll() {
+      this.handleToggleClass(this.imageElementAll, 'remove');
+      [].slice.call(document.querySelectorAll('audio')).forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+    }
+
+    //再生終了後の処理
+    handleEndAudio() {
+      this.audioElement.addEventListener("ended", ()=>{
+        this.handleToggleClass(this.imageElement, 'remove');
+      });
+    }
+
+    //img要素のクラス付け替え管理
+    handleToggleClass(target, classListType) {
+      [].slice.call(document.querySelectorAll(target)).forEach(img => {
+        img.classList[classListType]('is-toggleAnimation');
+      });
+    }
+  }
+
 
   // 実行
   w.addEventListener('DOMContentLoaded', () => {
@@ -352,6 +437,24 @@ class countDown {
 
 
   w.addEventListener('load', () => {
+    //AudioControl インスタンス化
+    const toggleTargetAll = '.js-toggleImage';
+    new AudioControls({
+      audioElement: '/asset/audio/kokoronosora.mp3',
+      audioButton: '.js-handleButton.js-one',
+      imageElement: {
+        toggleTarget: '.js-audioImage.js-one',
+        toggleTargetAll: toggleTargetAll
+      }
+    });
+    new AudioControls({
+      audioElement: '/asset/audio/present.mp3',
+      audioButton: '.js-handleButton.js-two',
+      imageElement: {
+        toggleTarget: '.js-audioImage.js-two',
+        toggleTargetAll: toggleTargetAll
+      }
+    });
 
     new accordion('.js_accordion > .js_accordionButton', '.js_accordion > .js_accordionTarget', {
       transitionDuration: '1s',
