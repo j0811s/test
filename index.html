@@ -6,10 +6,10 @@
   <title>Document</title>
   <link rel="stylesheet" href="./asset/css/index.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/picturefill/3.0.3/picturefill.js"></script>
-  <script src="./asset/js/index.js" defer></script>
+  <link rel="stylesheet" href="./asset/css/jquery.fullpage.min.css">
 </head>
 <body>
-  <main>
+  <main id="top">
     <div class="lp-group" style="display: none;">
       <ul class="lp-tab_list js-tab_list">
         <li class="lp-tab_item js-tab_item is-active">カウントダウン</li>
@@ -76,7 +76,7 @@
     </div>
 
     <div class="boxWrapper">
-      <ul class="boxNav js-localNav">
+      <ul id="menu" class="boxNav js-localNav">
         <li>
           <a href='#box1'>BOX1</a>
         </li>
@@ -92,25 +92,180 @@
         <li>
           <a class="" href='#box5'>BOX5</a>
         </li>
-        <li>
+        <!-- <li>
           <a class="" href='#'>#</a>
         </li>
         <li>
           <a class="js-noSmooth" href='#'>noScroll</a>
-        </li>
+        </li> -->
       </ul>
-      <div id="box1" class="box js-audioContainer">
-        <img style="width: 150px" class="js-one js-audioImage js-toggleImage" src="https://placehold.jp/150x150.png" alt="">
-        <button class="js-handleButton js-one">オーディオボタン</button>
+
+      <div id="fullpage">
+
+        <div id="box1" class="js-section box mod-box2 js-audioContainer">
+          <div>
+            <img style="width: 150px" class="js-two js-audioImage js-toggleImage" src="asset/images/boy_03.png" alt="">
+            <button class="js-handleButton js-two">オーディオボタン</button>
+          </div>
+        </div>
+
+        <div id="box2" class="js-section box js-audioContainer">
+          <div class="svg_wrapper">
+            <img class="imageContent" src="https://shop.adidas.jp/lp/originals/images/lpc-mastHead_winterBlackPink_201030-min.jpg" alt="">
+            <div class="glitch">
+              <div class="glitch-clips">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
+                      <clipPath id="clipAllTEST">
+                          <path d="M598.3,262H0.6v-12h597.7V262z M826.2,308H226.5v20h599.7V308z M800.2,348h-60v60h60V348z M720.2,348h-60
+                              v60h60V348z M640.3,348h-60v60h60V348z M560.3,348h-60v60h60V348z M2165.5,653.8h-60v60h60V653.8z M2085.5,653.8h-60v60h60V653.8z
+                                  M2005.6,653.8h-60v60h60V653.8z M480.4,348h-60v60h60V348z M430.4,150.1h-60v60h60V150.1z M430.4,78.1h-60v60h60V78.1z
+                                  M312.4,0.2h-60v209.9h60V0.2z M336.4,0.2h-10v209.9h10V0.2z M358.4,0.2h-4v209.9h4V0.2z M680.3,272H160.5v4h519.7V272z
+                                  M622.3,427.9H102.5v4h519.7V427.9z M528.3,284H128.5v4h399.8V284z M2365.4,443.9h-431.8v20h431.8V443.9z M2259.4,595.9v-40
+                                  M232.5,0.2H0.6v209.9h231.9V0.2z M2365.4,408h-497.7v4h497.7V408z M2365.4,617.8h-307.8v12h307.8V617.8z M2365.4,639.8h-145.9v4
+                              h145.9V639.8z M2235.5,421.9h-399.8v4h399.8V421.9z M398.4,441.9H0.6v14h397.8V441.9z M2365.4,493.9h-345.8v4h345.8V493.9z
+                                  M2119.5,511.9h-199.9v14h199.9V511.9z"></path>
+                      </clipPath>
+                  </svg>
+                </div>
+              <div class="glitch-box js-toggleClassWrapper">
+                <svg class="glitch-boxSvg mod-pc" width="100%" height="100%" viewBox="0 0 2400 1000">
+                    <image xlink:href="https://shop.adidas.jp/lp/originals/images/lpc-mastHead_winterBlackPink_201030-min.jpg" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAllTEST)" class="js-toggleActive"></image>
+                </svg>
+                <svg class="glitch-boxSvg mod-pc mod-glitch" width="100%" height="100%" viewBox="0 0 2400 1000">
+                    <image xlink:href="https://shop.adidas.jp/lp/originals/images/lpc-mastHead_winterBlackPink_201030-min.jpg" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAllTEST)" class="js-toggleActive"></image>
+                </svg>
+                <svg class="glitch-boxSvg mod-pc mod-glitch2" width="100%" height="100%" viewBox="0 0 2400 1000">
+                    <image xlink:href="https://shop.adidas.jp/lp/originals/images/lpc-mastHead_winterBlackPink_201030-min.jpg" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAllTEST)" class="js-toggleActive"></image>
+                </svg>
+              </div>
+            </div>
+            <div class="mod-center">
+              <img style="width: 150px" class="js-one js-audioImage js-toggleImage" src="asset/images/boy_01.png" alt="boy">
+              <button class="js-handleButton js-one">オーディオボタン</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="box3" class="js-section box ">
+          <img id="js-keyvisual" class="keyvisual" src="https://marksman.itembox.design/item/assets/img/top/slide01.jpg" alt="">
+          <div class="glitch">
+            <div class="glitch-clips">
+                <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
+                    <clipPath id="clipAll">
+                        <path d="M598.3,262H0.6v-12h597.7V262z M826.2,308H226.5v20h599.7V308z M800.2,348h-60v60h60V348z M720.2,348h-60
+                            v60h60V348z M640.3,348h-60v60h60V348z M560.3,348h-60v60h60V348z M2165.5,653.8h-60v60h60V653.8z M2085.5,653.8h-60v60h60V653.8z
+                                M2005.6,653.8h-60v60h60V653.8z M480.4,348h-60v60h60V348z M430.4,150.1h-60v60h60V150.1z M430.4,78.1h-60v60h60V78.1z
+                                M312.4,0.2h-60v209.9h60V0.2z M336.4,0.2h-10v209.9h10V0.2z M358.4,0.2h-4v209.9h4V0.2z M680.3,272H160.5v4h519.7V272z
+                                M622.3,427.9H102.5v4h519.7V427.9z M528.3,284H128.5v4h399.8V284z M2365.4,443.9h-431.8v20h431.8V443.9z M2259.4,595.9v-40
+                                M232.5,0.2H0.6v209.9h231.9V0.2z M2365.4,408h-497.7v4h497.7V408z M2365.4,617.8h-307.8v12h307.8V617.8z M2365.4,639.8h-145.9v4
+                            h145.9V639.8z M2235.5,421.9h-399.8v4h399.8V421.9z M398.4,441.9H0.6v14h397.8V441.9z M2365.4,493.9h-345.8v4h345.8V493.9z
+                                M2119.5,511.9h-199.9v14h199.9V511.9z"></path>
+                    </clipPath>
+                </svg>
+                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
+                    <clipPath id="clipAll-sp">
+                        <path d="M126.4,122.9h-10v-6h10V122.9z M156.4-0.1h-30v117h30V-0.1z M0.4-0.1v117h116v-117H0.4z M216.4,38.9h-30v30
+                            h30V38.9z M216.4,74.9h-30v30h30V74.9z M179.4-0.1h-2v105h2V-0.1z M168.4-0.1h-5v105h5V-0.1z M636.4,349.9h114v-2h-114V349.9z
+                                M584.4,342.9h166v-12h-166V342.9z M385.4,391.9h365v-24h-365V391.9z M608.4,247.9v71h22v7h120v-7v-71H608.4z M676.4,459.9h44v-44
+                            h-44V459.9z M564.4,459.9h44v-44h-44V459.9z M156.4,122.9h144v-6h-144V122.9z M620.4,459.9h44v-44h-44V459.9z M126.4,122.9h30v4
+                            h104v2h-104v5h44v2h-44v44h-30v-44h-10v44H0.4v-44v-2v-5v-2v-4h116v4h10V122.9z M126.4,128.9h-10v5h10V128.9z"></path>
+                    </clipPath>
+                </svg> -->
+            </div>
+
+            <div class="glitch-box js-glitchBox">
+                <svg class="glitch-boxSvg js-glitchItem mod-pc" width="100%" height="100%" viewBox="0 0 2400 1000">
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/top/slide02.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll)" class="add-active"></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/top/slide03.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll)" class=""></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/top/slide04.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll)" class=""></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/top/slide01.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll)" class=""></image>
+                </svg>
+                <svg class="glitch-boxSvg js-glitchItem mod-pc mod-glitch" width="100%" height="100%" viewBox="0 0 2400 1000">
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/top/slide02.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll)" class="add-active"></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/top/slide03.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll)" class=""></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/top/slide04.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll)" class=""></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/top/slide01.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll)" class=""></image>
+                </svg>
+                <svg class="glitch-boxSvg js-glitchItem mod-pc mod-glitch2" width="100%" height="100%" viewBox="0 0 2400 1000">
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/top/slide02.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll)" class="add-active"></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/top/slide03.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll)" class=""></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/top/slide04.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll)" class=""></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/top/slide01.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll)" class=""></image>
+                </svg>
+            </div>
+
+            <!-- <div class="glitch-box js-glitchBox">
+                <svg class="glitch-boxSvg js-glitchItem mod-sp" width="100%" height="100%" viewBox="0 0 750 620">
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/sp/top/slide02.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll-sp)" class=""></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/sp/top/slide03.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll-sp)" class=""></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/sp/top/slide04.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll-sp)" class=""></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/sp/top/slide01.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll-sp)" class="add-active"></image>
+                </svg>
+                <svg class="glitch-boxSvg js-glitchItem mod-sp mod-glitch" width="100%" height="100%" viewBox="0 0 750 620">
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/sp/top/slide02.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll-sp)" class=""></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/sp/top/slide03.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll-sp)" class=""></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/sp/top/slide04.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll-sp)" class=""></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/sp/top/slide01.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll-sp)" class="add-active"></image>
+                </svg>
+                <svg class="glitch-boxSvg js-glitchItem mod-sp mod-glitch2" width="100%" height="100%" viewBox="0 0 750 620">
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/sp/top/slide02.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll-sp)" class=""></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/sp/top/slide03.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll-sp)" class=""></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/sp/top/slide04.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll-sp)" class=""></image>
+                    <image xlink:href="https://marksman.itembox.design/item/assets/img/sp/top/slide01.jpg?t=20200904101546" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipAll-sp)" class="add-active"></image>
+                </svg>
+            </div> -->
+          </div>
+        </div>
+
+        <div id="box4" class="box js-section mod-box3">
+          <div class="js-" style="height: 1300px;">
+            <h2>HOGEHOGEHOGE</h2>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+          </div>
+        </div>
+
+        <div id="box5" class="box js-section mod-box4">
+          <div class="js-normalScroll" style="height: 300px; overflow-y: scroll;">
+            <h2>HOGEHOGEHOGE</h2>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+            <p>hogehoge</p>
+            <p>hogehgohe</p>
+          </div>
+        </div>
       </div>
-      <div id="box2" class="box js-audioContainer">
-        <img style="width: 150px" class="js-two js-audioImage js-toggleImage" src="https://placehold.jp/150x150.png" alt="">
-        <button class="js-handleButton js-two">オーディオボタン</button>
-      </div>
-      <div id="box3" class="box"></div>
-      <div id="box4" class="box"></div>
-      <div id="box5" class="box"></div>
     </div>
   </main>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="./asset/js/scrolloverflow.min.js"></script>
+  <script src="./asset/js/jquery.fullpage.min.js"></script>
+  <script src="./asset/js/index.js" defer></script>
 </body>
 </html>

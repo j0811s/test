@@ -337,87 +337,141 @@ class countDown {
   
 
   /**
-   * オーディオコントロール
+   * キャラクター音声の操作
    * @param  {Object} audioElement mp3のファイル指定
    * @param  {Object} buttonElement mp3を操作するボタン要素
-   * @param  {Object} imageElement.toggleTarget 切り替えimgのセレクタ指定
-   * @param  {Object} imageElement.toggleTargetAll 全体の切り替えimgの共通クラスセレクタ指定
+   * @param  {Object} imageElement.toggleClassTarget 切り替えimgのセレクタ指定
+   * @param  {Object} imageElement.toggleClassTargetAll 全体の切り替えimgの共通クラスセレクタ指定
+   * @param  {Array} imageElement.character 音声に関連するキャラクター画像名を配列に格納
    */
-  class AudioControls {
+  class ControlVoice {
     constructor(
       config = {
         audioElement: null,
         audioButton: null,
         imageElement: {
-          toggleTarget: null,
-          toggleTargetAll: null
+          toggleClassTarget: null,
+          toggleClassTargetAll: null,
+          character: []
         }
       }
     ) {
       this.audioElement = new Audio(config.audioElement);
       this.audioButton = config.audioButton;
-      this.imageElement = config.imageElement.toggleTarget;
-      this.imageElementAll = config.imageElement.toggleTargetAll;
+      this.imageElement = config.imageElement.toggleClassTarget;
+      this.imageElementAll = config.imageElement.toggleClassTargetAll;
+      this.character = config.imageElement.character;
       this.init();
     }
 
     init() {
       this.audioElement.muted = true;
       document.querySelectorAll(this.audioButton)[0].parentNode.insertBefore(this.audioElement, document.querySelectorAll(this.audioButton)[0].nextSibling);
-      this.handleClick();
+      this.handleButton();
     }
 
-    //オーディオボタンのクリックイベント
-    handleClick() {
+    /**
+     * オーディオボタンのクリックイベント
+     * 以降の関連メソッドはこのイベントに集約
+     */
+    handleButton() {
       [].slice.call(document.querySelectorAll(this.audioButton)).forEach(audioButton => {
         audioButton.addEventListener('click', (e) => {
           e.preventDefault();
           if (this.audioElement.paused) {
-            this.handleStopAudioAll();
-            this.handlePlayAudio();
+            this.handleStopAll();
+            this.handlePlay();
           } else {
-            this.handleStopAudio();
+            this.handleStop();
           }
         });
       })
     }
 
-    //再生処理
-    handlePlayAudio() {
+    /**
+     * 再生処理
+     */
+    handlePlay() {
       this.audioElement.muted = false;
       this.audioElement.play();
       this.handleToggleClass(this.imageElement, 'add');
-      this.handleEndAudio();
+      this.handleSetImage();
+      this.handleEnd();
     }
 
-    //停止処理
-    handleStopAudio() {
+    /**
+     * 停止処理
+     */
+    handleStop() {
       this.audioElement.pause();
       this.audioElement.currentTime = 0;
       this.handleToggleClass(this.imageElement, 'remove');
+      this.handleClearImage();
     }
-
-    //すべてのaudioタグの再生停止
-    handleStopAudioAll() {
+    
+    /**
+     * すべてのaudioタグの再生停止(初期化目的)
+     */
+    handleStopAll() {
       this.handleToggleClass(this.imageElementAll, 'remove');
       [].slice.call(document.querySelectorAll('audio')).forEach(audio => {
         audio.pause();
         audio.currentTime = 0;
       });
+      this.handleClearImage();
     }
 
-    //再生終了後の処理
-    handleEndAudio() {
+    /**
+     * 再生終了後の処理
+     * 再生前の状態に変更する
+     */
+    handleEnd() {
       this.audioElement.addEventListener("ended", ()=>{
         this.handleToggleClass(this.imageElement, 'remove');
+        this.handleClearImage();
       });
     }
 
-    //img要素のクラス付け替え管理
+    
+    /**
+     * img要素のクラス付け替え管理
+     * @param  {Object} target  classListで操作する対象セレクタ ex)this.imageElementAll
+     * @param  {String} classListType classListの種別 ex)'add'
+     */
     handleToggleClass(target, classListType) {
       [].slice.call(document.querySelectorAll(target)).forEach(img => {
         img.classList[classListType]('is-toggleAnimation');
       });
+    }
+
+    
+    /**
+     * 画像ループ開始
+     * this.characterでセットした画像を順々に表示
+     */
+    handleSetImage() {
+      let count = 0;
+      this.timerId = setInterval(() => {
+        document.querySelector(this.imageElement).setAttribute('src', `asset/images/${this.character[count]}`);
+        count++;
+        if (count >= this.character.length) count = 0;
+
+        //再生されてからループ中に音声が停止されていたら解除
+        if (this.audioElement.paused) {
+          clearInterval(this.timerId);
+          document.querySelector(this.imageElement).setAttribute('src', `asset/images/${this.character[0]}`);
+        }
+      }, 300);
+    }
+    
+    
+    /**
+     * 画像ループ停止
+     * handleSetImage()をクリアして、画像を1枚目に戻す
+     */
+    handleClearImage() {
+      clearInterval(this.timerId);
+      document.querySelector(this.imageElement).setAttribute('src', `asset/images/${this.character[0]}`);
     }
   }
 
@@ -425,11 +479,11 @@ class countDown {
   // 実行
   w.addEventListener('DOMContentLoaded', () => {
     
-    if (document.uniqueID && document.documentMode == 11) {
-      console.log("IE11 ○");
-    } else {
-      console.log("IE11 ×");
-    }
+    // if (document.uniqueID && document.documentMode == 11) {
+    //   console.log("IE11 ○");
+    // } else {
+    //   console.log("IE11 ×");
+    // }
 
     smoothScroll(600, d.querySelector('.js-localNav').clientHeight);
 
@@ -438,21 +492,33 @@ class countDown {
 
   w.addEventListener('load', () => {
     //AudioControl インスタンス化
-    const toggleTargetAll = '.js-toggleImage';
-    new AudioControls({
+    const toggleClassTargetAll = '.js-toggleImage';
+    new ControlVoice({
       audioElement: '/asset/audio/kokoronosora.mp3',
       audioButton: '.js-handleButton.js-one',
       imageElement: {
-        toggleTarget: '.js-audioImage.js-one',
-        toggleTargetAll: toggleTargetAll
+        toggleClassTarget: '.js-audioImage.js-one',
+        toggleClassTargetAll: toggleClassTargetAll,
+        character: [
+          'boy_01.png',
+          'boy_02.png',
+          'boy_03.png'
+        ]
       }
     });
-    new AudioControls({
+
+
+    new ControlVoice({
       audioElement: '/asset/audio/present.mp3',
       audioButton: '.js-handleButton.js-two',
       imageElement: {
-        toggleTarget: '.js-audioImage.js-two',
-        toggleTargetAll: toggleTargetAll
+        toggleClassTarget: '.js-audioImage.js-two',
+        toggleClassTargetAll: toggleClassTargetAll,
+        character: [
+          'boy_03.png',
+          'boy_02.png',
+          'boy_01.png'
+        ]
       }
     });
 
@@ -474,4 +540,94 @@ class countDown {
     // new countDown('#count', '2020/6/12 10:00:00', '2021/4/22 10:00:00');
     // new countDown('#count2', '2020/6/12 10:00:00', '2021/4/26 10:00:00');
   });
+
+
+
+  const setKeyvisual = () => {
+    //SVG要素
+    const glitchItem = [].slice.call(d.querySelectorAll(".js-glitchItem"));
+    const glitchImage = [].slice.call(d.querySelectorAll(".js-glitchItem image"));
+
+    //add-activeを持つimageタグのindex
+    let index = glitchImage.findIndex(list =>
+      [].slice.call(list.classList).includes("add-active")
+    );
+    //add-active付け替え用のindex
+    let updateIndex = index;
+
+    //インターバル
+    const changeInterval = 3000;
+
+    //add-activeの付け替え
+    setInterval(() => {
+      glitchItem.forEach(item => {
+        item.querySelectorAll('image')[updateIndex].classList.remove('add-active');
+      });
+      updateIndex >= glitchItem.length - 1 ? updateIndex = 0 : updateIndex += 1;
+      glitchItem.forEach(item => {
+        item.querySelectorAll('image')[updateIndex].classList.add('add-active');
+      });
+    }, changeInterval);
+
+
+    //KV
+    const keyvisual = d.getElementById('js-keyvisual');
+    const ketvisualArray = [
+      'https://marksman.itembox.design/item/assets/img/top/slide01.jpg',
+      'https://marksman.itembox.design/item/assets/img/top/slide02.jpg',
+      'https://marksman.itembox.design/item/assets/img/top/slide03.jpg',
+      'https://marksman.itembox.design/item/assets/img/top/slide04.jpg'
+    ]
+    setInterval(() => {
+      keyvisual.setAttribute('src', ketvisualArray[index]);
+      index >= glitchItem.length ? index = 0 : index += 1;
+    }, changeInterval);
+  }
+  setKeyvisual();
+  
+
+
+  //fullpage
+  const setAnimation = (index, nextIndex) => {
+    let currentIndex = index - 1;
+
+    const current = document.querySelectorAll('.js-toggleClassWrapper')[currentIndex];
+    if(current) current.classList.add('is-active');
+    const currentActive = [].slice.call(document.querySelectorAll('.js-toggleClassWrapper.is-active .js-toggleActive'));
+    
+    currentActive.forEach(item => {
+      item.classList.add('add-active');
+    });
+  }
+  
+  $(document).ready(function () { 
+    
+    $('#fullpage').fullpage({
+      sectionSelector: '.js-section',
+      navigation: true,
+      paddingTop: '64px',
+      scrollOverflow: true,
+      normalScrollElements: '.js-normalScroll',
+      onLeave: function (index, nextIndex, direction) {
+        setAnimation(index, nextIndex);
+      },
+      afterLoad: function (anchorLink, afterIndex) {
+        let currentIndex = afterIndex - 1;
+
+        // const current = document.querySelectorAll('.js-toggleClassWrapper')[currentIndex];
+        // if(current) current.classList.remove('is-active');
+        // const currentActive = [].slice.call(document.querySelectorAll('.js-toggleClassWrapper .js-toggleActive'));
+        
+        // currentActive.forEach(item => {
+        //   item.classList.remove('add-active');
+        // });
+      },
+      afterResize: function () {
+        // $.fn.fullpage.destroy();
+        // $.fn.fullpage.reBuild();
+      }
+    });
+
+  });
+
 })(document, window);

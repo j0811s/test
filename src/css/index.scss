@@ -141,19 +141,18 @@ video {
 
 
 main {
-  margin: 300px auto ;
-  background-color: red;
+  margin: 0 auto;
 }
 
 // スクロールテスト用
 .boxWrapper {
-  margin-top: 120px;
 
   .boxNav {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
+    z-index: 10;
     display: flex;
     justify-content: space-between;
     padding: 20px;
@@ -168,14 +167,416 @@ main {
     }
   }
   .box {
-    height: 600px;
-    margin: 500px auto 0;
-    background-color: #eee;
+    position: relative;
+    background-repeat: no-repeat;
+    background-color: #000;
     &:first-of-type {
       margin-top: 0;
     }
     &:nth-of-type(even) {
       background-color: #000;
     }
+
+    .keyvisual {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .svg_wrapper {
+      position: relative;
+    }
+
+    .imageContent {
+      position: relative;
+    }
+
+    .mod-center {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &.mod-box1 {
+      background-image: url('https://shop.adidas.jp/lp/originals/images/lpc-mastHead_winterBlackPink_201030-min.jpg');
+      background-size: cover;
+    }
+
+    &.mod-box2 {
+      background-image: url('https://marksman.itembox.design/item/assets/img/top/slide02.jpg');
+      background-size: cover;
+    }
+
+    &.mod-box3 {
+      background-image: url('https://marksman.itembox.design/item/assets/img/top/slide03.jpg');
+      background-size: cover;
+    }
+
+    &.mod-box4 {
+      background-image: url('https://marksman.itembox.design/item/assets/img/top/slide04.jpg');
+      background-size: cover;
+    }
+  }
+}
+
+.is-flash {
+  animation: flash .03s infinite;
+}
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: .8;
+  }
+}
+.is-skew {
+  animation: skew 3s infinite;
+}
+@keyframes skew {
+  0% {
+    transform: none;
+  }
+  33% {
+    transform: none;
+  }
+  33.3% {
+    transform: skewX(30deg);
+  }
+  33.6% {
+    transform: skewX(-30deg);
+  }
+  33.9% {
+    transform: none;
+  }
+  66% {
+    transform: none;
+  }
+  66.3% {
+    transform: skewX(5deg);
+  }
+  66.6% {
+    transform: skewX(-5deg);
+  }
+  66.9% {
+    transform: none;
+  }
+  77% {
+    transform: none;
+  }
+  77.3% {
+    transform: skewX(15deg);
+  }
+  77.6% {
+    transform: skewX(-15deg);
+  }
+  77.9% {
+    transform: none;
+  }
+}
+
+.is-glitch {
+  animation: glitch .3s both infinite;
+}
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  12.5% {
+    transform: translate(-1px, 1px);
+  }
+  37.5% {
+    transform: translate(-1px, -1px);
+  }
+  62.5% {
+    transform: translate(1px, 1px);
+  }
+  87.5% {
+    transform: translate(1px, -1px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+
+// 参考
+//https://marksman.itembox.design/item/assets/css/style.css?t=20200904101546
+
+.glitch-boxSvg {
+  backface-visibility: hidden;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 3
+}
+
+.glitch-boxSvg image {
+  opacity: 0;
+  transition: opacity .1s
+}
+
+.glitch-boxSvg image.add-active {
+  animation: changeGlitchAnimation .2s linear forwards;
+  opacity: 1
+}
+
+.glitch-clips {
+  height: 0;
+  overflow: hidden
+}
+
+.mod-glitch {
+  animation: 5s glitch infinite
+}
+
+.mod-glitch2 {
+  animation: 5s glitch infinite reverse
+}
+
+@keyframes glitch {
+  0% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  4.5% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  5% {
+    left: 25px;
+    top: -10px;
+    transform: scale(1.1)
+  }
+  5.5% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  9.5% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  10% {
+    left: -25px;
+    top: 0;
+    transform: scale(0.9)
+  }
+  10.5% {
+    left: 0;
+    top: 0;
+    -webkit-transform: scale(1);
+    transform: scale(1)
+  }
+  14.5% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  15% {
+    left: 0;
+    top: -20px;
+    transform: scale(1.2)
+  }
+  15.5% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  20% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  20.5% {
+    left: 20px;
+    top: 10px;
+    transform: scale(1.1)
+  }
+  21% {
+    left: -10px;
+    top: -10px;
+    transform: scale(1)
+  }
+  21.5% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  26% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  26.5% {
+    left: -10px;
+    top: -25px;
+    transform: scale(1.2)
+  }
+  27% {
+    left: 10px;
+    top: -20px;
+    transform: scale(0.9)
+  }
+  27.5% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  31% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  31.5% {
+    left: -20px;
+    top: 25px;
+    transform: scale(1.1)
+  }
+  32% {
+    left: 10px;
+    top: 10px;
+    transform: scale(1)
+  }
+  32.5% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  37% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  37.5% {
+    left: 20px;
+    top: 10px;
+    transform: scale(1.05)
+  }
+  38% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  38.5% {
+    left: -20px;
+    top: -10px;
+    transform: scale(1.1)
+  }
+  39% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  43.5% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  44% {
+    left: 25px;
+    top: -10px;
+    transform: scale(1.2)
+  }
+  44.5% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  49% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  49.5% {
+    left: -10px;
+    top: 25px;
+    transform: scale(1.1)
+  }
+  50% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  55.5% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  56% {
+    left: -20px;
+    top: 20px;
+    transform: scale(1.2)
+  }
+  56.5% {
+    left: 20px;
+    top: -10px;
+    transform: scale(1)
+  }
+  57% {
+    left: 0;
+    top: 0;
+    transform: scale(1)
+  }
+  60.5% {
+    left: 0;
+    top: 0;
+    -webkit-transform: scale(1);
+    transform: scale(1)
+  }
+  61% {
+    left: 25px;
+    top: 20px;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1)
+  }
+  61.5% {
+    left: 0;
+    top: 0;
+    -webkit-transform: scale(1);
+    transform: scale(1)
+  }
+  62% {
+    left: -25px;
+    top: -10px;
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2)
+  }
+  62.5% {
+    left: 0;
+    top: 0;
+    -webkit-transform: scale(1);
+    transform: scale(1)
+  }
+  100% {
+    left: 0;
+    top: 0;
+    -webkit-transform: scale(1);
+    transform: scale(1)
+  }
+}
+
+@keyframes changeGlitchAnimation {
+  0% {
+    transform: scaleX(2)
+  }
+  25% {
+    transform: scaleX(2)
+  }
+  30% {
+    transform: scaleX(1)
+  }
+  100% {
+    transform: scaleX(1)
   }
 }
