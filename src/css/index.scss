@@ -328,17 +328,30 @@ main {
   opacity: 1
 }
 
+.glitch-boxSvg image.is-active {
+  animation: changeGlitchAnimation .2s linear forwards;
+  opacity: 1
+}
+
 .glitch-clips {
   height: 0;
   overflow: hidden
 }
 
 .mod-glitch {
-  animation: 5s glitch infinite
+  animation: 5s glitch infinite;
 }
 
 .mod-glitch2 {
-  animation: 5s glitch infinite reverse
+  animation: 5s glitch infinite reverse;
+}
+
+.is-glitch {
+  animation: 5s glitch;
+}
+
+.is-glitch2 {
+  animation: 5s glitch reverse;
 }
 
 @keyframes glitch {

@@ -479,11 +479,7 @@ class countDown {
   // 実行
   w.addEventListener('DOMContentLoaded', () => {
     
-    // if (document.uniqueID && document.documentMode == 11) {
-    //   console.log("IE11 ○");
-    // } else {
-    //   console.log("IE11 ×");
-    // }
+    if (document.uniqueID && document.documentMode == 11) console.log("is IE11");
 
     smoothScroll(600, d.querySelector('.js-localNav').clientHeight);
 
@@ -588,15 +584,12 @@ class countDown {
 
 
   //fullpage
-  const setAnimation = (index, nextIndex) => {
-    let currentIndex = index - 1;
-
-    const current = document.querySelectorAll('.js-toggleClassWrapper')[currentIndex];
-    if(current) current.classList.add('is-active');
-    const currentActive = [].slice.call(document.querySelectorAll('.js-toggleClassWrapper.is-active .js-toggleActive'));
-    
-    currentActive.forEach(item => {
-      item.classList.add('add-active');
+  const setGlitchAnimation = (classListType) => {
+    document.querySelectorAll('.js-glitchSVG')[0].classList[classListType]('is-glitch');
+    document.querySelectorAll('.js-glitchSVG')[1].classList[classListType]('is-glitch2');
+    const currentSection = [].slice.call(document.querySelectorAll('.js-section.active .js-toggleActive'));
+    currentSection.forEach(currentItem => {
+      currentItem.classList[classListType]('is-active');
     });
   }
   
@@ -609,21 +602,12 @@ class countDown {
       scrollOverflow: true,
       normalScrollElements: '.js-normalScroll',
       onLeave: function (index, nextIndex, direction) {
-        setAnimation(index, nextIndex);
+        setGlitchAnimation('remove');
       },
       afterLoad: function (anchorLink, afterIndex) {
-        let currentIndex = afterIndex - 1;
-
-        // const current = document.querySelectorAll('.js-toggleClassWrapper')[currentIndex];
-        // if(current) current.classList.remove('is-active');
-        // const currentActive = [].slice.call(document.querySelectorAll('.js-toggleClassWrapper .js-toggleActive'));
-        
-        // currentActive.forEach(item => {
-        //   item.classList.remove('add-active');
-        // });
+        setGlitchAnimation('add');
       },
       afterResize: function () {
-        // $.fn.fullpage.destroy();
         // $.fn.fullpage.reBuild();
       }
     });
